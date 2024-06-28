@@ -6,7 +6,8 @@ resource "aws_instance" "base" {
     user_data = templatefile(
       "./scripts/base/init.sh",
       {
-        "base_common": local.base_common_runtime
+        "base_common": local.base_common_runtime,
+        "druid_version": var.druid_version
       }
     )
 
@@ -19,16 +20,18 @@ resource "aws_instance" "base" {
       Name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-base"
       CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-base"
       ClusterName = var.cluster_name
+      ResourceType = "druid-base"
     }
 }
 
 resource "aws_ami_from_instance" "ami_base" {
   name               = "druid-base"
-  source_instance_id = aws_instance.base
+  source_instance_id = aws_instance.base.id
 
   tags = {
     Name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-base"
-    CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-base"
+    CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-base-ami"
     ClusterName = var.cluster_name
+    ResourceType = "druid-base-ami"
   }
 }
