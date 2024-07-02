@@ -42,5 +42,5 @@ terraform.rc
 infra/scripts/*/*
 !infra/scripts/**/*.sh
 
-storage/*
-!/storage/.gitkeep
+*/storage/*
+!*/storage/.gitkeep

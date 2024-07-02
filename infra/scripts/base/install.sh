@@ -1,3 +1,4 @@
+#!/bin/bash
 version=(${1//"apache-druid-"/ })
 
 sudo sysctl -w vm.max_map_count=262144

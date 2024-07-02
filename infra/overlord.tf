@@ -1,7 +1,12 @@
 resource "aws_instance" "overlord" {
     ami = aws_ami_from_instance.ami_base.id
-    instance_type = "t2.micro"
+    instance_type = "m5a.large"
     associate_public_ip_address = false
+    key_name = aws_key_pair.kp.key_name
+
+    vpc_security_group_ids = [
+      aws_security_group.druid_sg.id
+    ]
 
     user_data = templatefile(
       "./scripts/overlord/init.sh",
