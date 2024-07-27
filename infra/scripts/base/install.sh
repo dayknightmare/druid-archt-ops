@@ -8,7 +8,7 @@ wget https://dlcdn.apache.org/druid/$version/$1-bin.tar.gz
 
 tar -xvf $1-bin.tar.gz
 
-mkdir ./$1/conf/druid/cluster/historical/historical
+mkdir $1/conf/druid/cluster/historical/historical
 
 wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar -P $1/extensions/mysql-metadata-storage
 
@@ -28,3 +28,7 @@ WHEREAMI="$(cd "$WHEREAMI" && pwd)"
 
 exec "$WHEREAMI/supervise" -c "$WHEREAMI/../conf/supervise/cluster/historical.conf"
 ' > $1/bin/start-cluster-historical-server
+
+chmod 744 $1/conf/supervise/cluster/historical.conf
+chmod 744 $1/conf/supervise/cluster/data.conf
+chmod 744 $1/bin/start-cluster-historical-server

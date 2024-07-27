@@ -71,7 +71,7 @@ resource "aws_vpc_security_group_ingress_rule" "druid_inbound_internal_ip" {
 
 resource "aws_vpc_security_group_ingress_rule" "druid_ex_ip" {
   security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv4 = "201.1.15.249/32"
+  cidr_ipv4 = "177.34.189.13/32"
   ip_protocol = "-1"
 }
 

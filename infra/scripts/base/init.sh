@@ -12,8 +12,12 @@ unzip awscliv2.zip
 sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/local/aws-cli --update;
 
 wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/install.sh
+wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/cw-exporter.sh
+wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/get_masters_zk.sh
 
 sudo chmod +x install.sh
+sudo chmod +x cw-exporter.sh
+sudo chmod +x get_masters_zk.sh
 
 fullversion=${druid_version}
 version=($${fullversion//"apache-druid-"/ })
