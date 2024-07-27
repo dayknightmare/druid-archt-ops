@@ -1,14 +1,14 @@
 terraform {
-    required_providers {
-      aws = {
-        source = "hashicorp/aws"
-        version = "~> 4.16"
-      }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
     }
+  }
 }
 
 provider "aws" {
-  region = var.region
+  region  = var.region
   profile = var.profile
 }
 
@@ -33,7 +33,7 @@ resource "aws_s3_bucket" "bucket_dw" {
 
   tags = {
     CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-s3"
-    ClusterName = var.cluster_name
+    ClusterName  = var.cluster_name
     ResourceType = "druid-s3"
   }
 }
@@ -52,37 +52,3 @@ resource "aws_key_pair" "kp" {
   }
 }
 
-resource "aws_security_group" "druid_sg" {
-  name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
-
-  tags = {
-    Name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
-    CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
-    ClusterName = var.cluster_name
-    ResourceType = "druid-sg"
-  }
-}
-
-resource "aws_vpc_security_group_ingress_rule" "druid_inbound_internal_ip" {
-  security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv4 = "172.31.0.0/16"
-  ip_protocol = "-1"
-}
-
-resource "aws_vpc_security_group_ingress_rule" "druid_ex_ip" {
-  security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv4 = "177.34.189.13/32"
-  ip_protocol = "-1"
-}
-
-resource "aws_vpc_security_group_egress_rule" "druid_outbound_all_ipv4" {
-  security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1"
-}
-
-resource "aws_vpc_security_group_egress_rule" "druid_outbound_all_ipv6" {
-  security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv6         = "::/0"
-  ip_protocol       = "-1"
-}

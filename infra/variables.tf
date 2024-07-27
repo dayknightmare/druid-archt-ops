@@ -1,35 +1,35 @@
 variable "profile" {
   description = "AWS profile"
-  type = string
-  default = "default"
+  type        = string
+  default     = "default"
 }
 
 variable "region" {
   description = "AWS region"
-  type = string
-  default = "us-east-2"
+  type        = string
+  default     = "us-east-2"
 }
 
 variable "cluster_name" {
   description = "Druid cluster name"
-  type = string
+  type        = string
 }
 
 variable "db_type" {
-  type = string
+  type        = string
   description = "Select database type between postgres and mysql"
-  default = "mysql"
+  default     = "mysql"
 
   validation {
-    condition = contains(["postgres", "mysql"], var.db_type)
+    condition     = contains(["postgres", "mysql"], var.db_type)
     error_message = "Valid values for db_type are (postgres, mysql)."
   }
 }
 
 variable "druid_version" {
-  type = string
+  type        = string
   description = "Select Apache Druid version to be used in cluster"
-  default = "apache-druid-30.0.0"
+  default     = "apache-druid-30.0.0"
 
   validation {
     condition = contains([

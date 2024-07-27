@@ -27,3 +27,8 @@ version=($${fullversion//"apache-druid-"/ })
 echo '${base_common}' > $fullversion/conf/druid/cluster/_common/common.runtime.properties
 
 EOF
+
+export AWS_ACCESS_KEY_ID=$access_key
+export AWS_SECRET_ACCESS_KEY=$secret_key
+
+aws ssm put-parameter --name "UserDataBaseCompletion" --value "completed" --type "String" --overwrite --region $region
