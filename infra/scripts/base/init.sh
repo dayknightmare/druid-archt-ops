@@ -1,7 +1,15 @@
 #!/bin/bash
-sudo apt install -y openjdk-17-jdk unzip htop vim curl
+sudo -u ubuntu -i <<'EOF'
 
 cd /home/ubuntu
+
+sudo apt install -y openjdk-17-jdk unzip htop vim curl
+sudo apt install -y unzip
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+
+sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/local/aws-cli --update;
 
 wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/install.sh
 
@@ -12,4 +20,6 @@ version=($${fullversion//"apache-druid-"/ })
 
 ./install.sh $fullversion
 
-echo '${base_common}' > /home/ubuntu/$fullversion/conf/druid/cluster/_common/common.runtime.properties
+echo '${base_common}' > $fullversion/conf/druid/cluster/_common/common.runtime.properties
+
+EOF
