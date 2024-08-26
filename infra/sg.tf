@@ -15,9 +15,13 @@ resource "aws_vpc_security_group_ingress_rule" "druid_inbound_internal_ip" {
   ip_protocol       = "-1"
 }
 
+data "http" "my_ip" {
+ url = "https://ipv4.icanhazip.com"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "druid_ex_ip" {
   security_group_id = aws_security_group.druid_sg.id
-  cidr_ipv4         = "177.34.189.13/32"
+  cidr_ipv4         = "${chomp(data.http.my_ip.response_body)}/32"
   ip_protocol       = "-1"
 }
 

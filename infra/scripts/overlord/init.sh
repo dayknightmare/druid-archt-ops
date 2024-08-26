@@ -17,3 +17,5 @@ sudo systemctl enable druid.service
 sudo systemctl start druid.service
 
 EOF
+
+echo '* * * * * root /home/ubuntu/cw_exporter.sh overlord' >> /etc/crontab

@@ -12,11 +12,11 @@ unzip awscliv2.zip
 sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/local/aws-cli --update;
 
 wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/install.sh
-wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/cw-exporter.sh
+wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/cw_exporter.sh
 wget https://raw.githubusercontent.com/dayknightmare/druid-archt-ops/master/infra/scripts/base/get_masters_zk.sh
 
 sudo chmod +x install.sh
-sudo chmod +x cw-exporter.sh
+sudo chmod +x cw_exporter.sh
 sudo chmod +x get_masters_zk.sh
 
 fullversion=${druid_version}
@@ -26,9 +26,11 @@ version=($${fullversion//"apache-druid-"/ })
 
 echo '${base_common}' > $fullversion/conf/druid/cluster/_common/common.runtime.properties
 
+aws configure set aws_access_key_id $access_key
+aws configure set aws_secret_access_key $secret_key
 EOF
 
 export AWS_ACCESS_KEY_ID=$access_key
 export AWS_SECRET_ACCESS_KEY=$secret_key
 
-aws ssm put-parameter --name "UserDataBaseCompletion" --value "completed" --type "String" --overwrite --region $region
+echo "1" > "/home/ubuntu/finished.txt"

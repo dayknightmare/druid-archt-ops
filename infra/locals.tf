@@ -4,6 +4,8 @@ locals {
     for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1])
   }
 
+  pk_file_path = "./storage/${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-key.pem"
+
   base_db = templatefile(
     var.db_type == "mysql" ? "./conf/base/mysql.properties" : "./conf/base/postgres.properties",
     {
