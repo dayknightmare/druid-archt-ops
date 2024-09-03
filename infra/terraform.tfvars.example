@@ -1,0 +1,16 @@
+profile = "default"
+region = "us-east-2"
+
+druid_version = "apache-druid-30.0.0"
+cluster_name = "prod"
+internal_password = "123"
+admin_password = "123"
+
+db_type = "postgres"
+db_host = "localhost"
+db_port = 5432
+db_user = "druid"
+db_password = "druid"
+db_db = "druid"
+
+base_instance_type = "t2.nano"
