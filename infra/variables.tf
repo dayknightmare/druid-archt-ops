@@ -21,7 +21,6 @@ variable "base_instance_type" {
   default = "t2.micro"
 }
 
-
 variable "druid_version" {
   type        = string
   description = "Select Apache Druid version to be used in cluster"

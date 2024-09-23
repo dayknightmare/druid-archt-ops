@@ -12,45 +12,17 @@ provider "aws" {
   profile = var.profile
 }
 
-data "aws_ami" "ubuntu24" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
+module "overlord" {
+  source = "./nodes/overloard"
+  base_data = {
+    base_common = local.base_common,
+    profile = var.profile,
+    region = var.region,
+    cluster_name = var.cluster_name,
+    druid_version = var.druid_version,
+    key_name = aws_key_pair.kp.key_name,
+    ubuntu24_id = data.aws_ami.ubuntu24.id,
+    sg_id = aws_security_group.druid_sg.id,
+    pk_file_path = local.pk_file_path,
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"]
-}
-
-resource "aws_s3_bucket" "bucket_dw" {
-  bucket = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-datawarehouse"
-
-  tags = {
-    CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-s3"
-    ClusterName  = var.cluster_name
-    ResourceType = "druid-s3"
-  }
-}
-
-resource "tls_private_key" "pk" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "kp" {
-  key_name   = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-key"
-  public_key = tls_private_key.pk.public_key_openssh
-}
-
-resource "local_sensitive_file" "kp_file" {
-  filename = local.pk_file_path
-  file_permission = 400
-  directory_permission = 700
-  content = tls_private_key.pk.private_key_pem
 }

@@ -13,21 +13,25 @@ locals {
     }
   )
 
-  overlord_common_runtime = file("./conf/overlord/runtime.properties")
-  overlord_jvm = templatefile(
-    "./conf/overlord/jvm.config",
+  base_common = templatefile(
+    "./scripts/base/init.sh",
     {
-      "xms" : "1g"
-      "xmx" : "1g",
+      "base_common" : templatefile(
+        "./conf/base/common.runtime.properties",
+        {
+          "database_type_ext" : var.db_type == "mysql" ? "mysql-metadata-storage" : "postgresql-metadata-storage"
+          "db_properties" : local.base_db,
+          "cluster_name" : var.cluster_name,
+          "aws_access" : aws_iam_access_key.druid_access_key.id,
+          "aws_secret" : aws_iam_access_key.druid_access_key.secret,
+          "admin_password" : var.admin_password,
+          "internal_password" : var.internal_password,
+        }
+      ),
+      "druid_version" : var.druid_version,
       "region" : var.region,
-    }
-  )
-
-  overlord_daemon = templatefile(
-    "./conf/overlord/druid.service",
-    {
-      "cmd_druid" : "./start-cluster-master-with-zk-server"
-      "druid_version" : var.druid_version
+      "access_key" : aws_iam_access_key.druid_access_key.id,
+      "secret_key" : aws_iam_access_key.druid_access_key.secret,
     }
   )
 }

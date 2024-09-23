@@ -1,8 +1,11 @@
 #!/bin/bash
 version=(${1//"apache-druid-"/ })
 
-sudo sysctl -w vm.max_map_count=262144
-sudo echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+sudo sysctl -w vm.max_map_count=800000
+sudo sh -c 'echo "vm.max_map_count=800000" >> /etc/sysctl.conf'
+sudo sh -c 'echo "* soft nofile 800000" >> /etc/security/limits.conf'
+sudo sh -c 'echo "* hard nofile 800000" >> /etc/security/limits.conf'
+sudo sysctl -p
 
 wget https://dlcdn.apache.org/druid/$version/$1-bin.tar.gz
 

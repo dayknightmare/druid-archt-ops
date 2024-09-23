@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/home/ubuntu/${druid_version}-bin/bin
+WorkingDirectory=/home/ubuntu/${druid_version}/bin
 ExecStart=sh -c "${cmd_druid}"
 
 [Install]
