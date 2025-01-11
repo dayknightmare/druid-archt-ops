@@ -17,31 +17,14 @@ variable "cluster_name" {
 
 variable "base_instance_type" {
   description = "Base ec2 instance"
-  type = string
-  default = "t2.micro"
+  type        = string
+  default     = "t2.micro"
 }
 
 variable "druid_version" {
   type        = string
   description = "Select Apache Druid version to be used in cluster"
-  default     = "apache-druid-30.0.0"
-
-  validation {
-    condition = contains([
-      "apache-druid-30.0.0",
-      "apache-druid-29.0.1",
-      "apache-druid-29.0.0",
-      "apache-druid-28.0.1",
-      "apache-druid-28.0.0",
-      "apache-druid-27.0.0",
-      "apache-druid-26.0.0",
-      "apache-druid-25.0.0",
-      "apache-druid-24.0.2",
-      "apache-druid-24.0.1",
-      "apache-druid-24.0.0",
-    ], var.druid_version)
-    error_message = "Invalid Druid version, please choice a version in https://archive.apache.org/dist/druid that be greater or equal than apache-druid-24.0.0"
-  }
+  default     = "30.0.0"
 }
 
 variable "db_type" {
@@ -59,7 +42,6 @@ variable "db_host" {
   type        = string
   description = "Database host"
 }
-
 
 variable "db_port" {
   type        = number
@@ -89,4 +71,17 @@ variable "admin_password" {
 variable "internal_password" {
   type        = string
   description = "Druid internal system password"
+}
+
+variable "zk_data" {
+  type = object({
+    instance = string,
+    count    = number,
+    version  = string,
+  })
+
+  validation {
+    condition     = var.zk_data.count >= 3 && var.zk_data.count % 2 == 1
+    error_message = "Instance count must be greater than or equal to 3 and be odd"
+  }
 }

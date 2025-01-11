@@ -28,6 +28,7 @@ locals {
           "internal_password" : var.internal_password,
         }
       ),
+      "cluster_name": var.cluster_name,
       "druid_version" : var.druid_version,
       "region" : var.region,
       "access_key" : aws_iam_access_key.druid_access_key.id,

@@ -13,8 +13,7 @@ locals {
   overlord_daemon = templatefile(
     "./conf/overlord/druid.service",
     {
-      "cmd_druid" : "./start-cluster-master-with-zk-server"
-      "druid_version" : var.base_data.druid_version
+      "cmd_druid" : "./start-cluster-master-no-zk-server",
     }
   )
 }

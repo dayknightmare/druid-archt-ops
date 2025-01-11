@@ -26,3 +26,19 @@ module "overlord" {
     pk_file_path = local.pk_file_path,
   }
 }
+
+# module "zk" {
+#   source = "./nodes/zk"
+#   base_data = {
+#     profile = var.profile,
+#     region = var.region,
+#     cluster_name = var.cluster_name,
+#     zk_data = var.zk_data,
+#     key_name = aws_key_pair.kp.key_name,
+#     ubuntu24_id = data.aws_ami.ubuntu24.id,
+#     sg_id = aws_security_group.druid_sg.id,
+#     access_key = aws_iam_access_key.druid_access_key.id,
+#     secret_key = aws_iam_access_key.druid_access_key.secret,
+#     pk_file_path = local.pk_file_path,
+#   }
+# }

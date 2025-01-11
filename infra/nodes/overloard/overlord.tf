@@ -1,4 +1,3 @@
-
 resource "aws_instance" "overlord" {
   ami                         = var.base_data.ubuntu24_id
   instance_type               = "m5a.large"
@@ -27,8 +26,8 @@ resource "aws_instance" "overlord" {
   }
 
   tags = {
-    Name         = "${var.base_data.cluster_name == "" ? "" : "${var.base_data.cluster_name}-"}druid-overlord"
-    CostTracking = "${var.base_data.cluster_name == "" ? "" : "${var.base_data.cluster_name}-"}druid-overlord"
+    Name         = "${var.base_data.cluster_name}-druid-overlord"
+    CostTracking = "${var.base_data.cluster_name}-druid-overlord"
     ClusterName  = var.base_data.cluster_name
     ResourceType = "druid-overlord"
   }
@@ -59,8 +58,8 @@ resource "aws_ami_from_instance" "ami-overlord" {
   depends_on = [null_resource.wait_overlord]
 
   tags = {
-    Name         = "${var.base_data.cluster_name == "" ? "" : "${var.base_data.cluster_name}-"}druid-overlord"
-    CostTracking = "${var.base_data.cluster_name == "" ? "" : "${var.base_data.cluster_name}-"}druid-overlord-ami"
+    Name         = "${var.base_data.cluster_name}-druid-overlord"
+    CostTracking = "${var.base_data.cluster_name}-druid-overlord-ami"
     ClusterName  = var.base_data.cluster_name
     ResourceType = "druid-overlord-ami"
   }

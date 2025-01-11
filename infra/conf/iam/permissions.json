@@ -10,7 +10,8 @@
                 "s3:GetObject",
                 "s3:GetObjectAcl",
                 "s3:DeleteObject",
-                "cloudwatch:PutMetricData"
+                "cloudwatch:PutMetricData",
+                "ec2:DescribeInstances"
             ],
             "Resource": "*"
         }
