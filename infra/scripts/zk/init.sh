@@ -101,8 +101,8 @@ aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-nam
 aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "MemoryUtilization" --unit=Percent --dimensions InstanceId=\$INSTANCE_ID,DruidCluterType=\$DRUID_NODE_TYPE --value \$(free | grep Mem | awk '{print \$3/\$2 * 100.0}')
 aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "MemoryUtilization" --unit=Percent --dimensions DruidCluterType=\$DRUID_NODE_TYPE --value \$(free | grep Mem | awk '{print \$3/\$2 * 100.0}')
 
-aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "StorageLeft" --unit=Percent --dimensions InstanceId=$INSTANCE_ID,DruidCluterType=\$DRUID_NODE_TYPE --value \$(df | grep -e '^/dev/nvme0n1p1' | awk '{printf 100-(\$3*100)/\$2}')
-aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "StorageLeft" --unit=Percent --dimensions DruidCluterType=\$DRUID_NODE_TYPE --value \$(df | grep -e '^/dev/nvme0n1p1' | awk '{printf 100-(\$3*100)/\$2}')
+aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "StorageLeft" --unit=Percent --dimensions InstanceId=$INSTANCE_ID,DruidCluterType=\$DRUID_NODE_TYPE --value \$(df | grep -e '^/dev/nvme0n1p1 ' | awk '{printf 100-(\$3*100)/\$2}')
+aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "StorageLeft" --unit=Percent --dimensions DruidCluterType=\$DRUID_NODE_TYPE --value \$(df | grep -e '^/dev/nvme0n1p1 ' | awk '{printf 100-(\$3*100)/\$2}')
 
 aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "CPUUsage" --unit=Percent --dimensions InstanceId=\$INSTANCE_ID,DruidCluterType=\$DRUID_NODE_TYPE --value \$(vmstat | tail -1 | awk '{print 100-\$15}')
 aws cloudwatch --region ${region} put-metric-data --namespace="ECS" --metric-name "CPUUsage" --unit=Percent --dimensions DruidCluterType=\$DRUID_NODE_TYPE --value \$(vmstat | tail -1 | awk '{print 100-\$15}')
