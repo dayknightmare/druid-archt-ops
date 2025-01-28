@@ -1,6 +1,5 @@
-
 locals {
-  pk_file_path = "./storage/${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-key.pem"
+  pk_file_path = "./storage/${var.cluster_name}-druid-key.pem"
 
   base_db = templatefile(
     var.db_type == "mysql" ? "./conf/base/mysql.properties" : "./conf/base/postgres.properties",
@@ -26,8 +25,11 @@ locals {
           "aws_secret" : aws_iam_access_key.druid_access_key.secret,
           "admin_password" : var.admin_password,
           "internal_password" : var.internal_password,
+          "env_zk": "\\$${env:DRUID_IPS_ZK:-localhost}",
+          "region": var.region,
         }
       ),
+      "log4j": file("./conf/base/log4j2.xml"),
       "cluster_name": var.cluster_name,
       "druid_version" : var.druid_version,
       "region" : var.region,

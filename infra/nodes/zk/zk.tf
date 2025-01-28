@@ -1,5 +1,5 @@
 resource "aws_instance" "zk" {
-  ami                         = var.base_data.ubuntu24_id
+  ami                         = var.base_data.ami_id
   instance_type               = var.base_data.zk_data.instance
   associate_public_ip_address = true
   key_name                    = var.base_data.key_name
@@ -17,6 +17,7 @@ resource "aws_instance" "zk" {
       "cluster_name" : var.base_data.cluster_name,
       "access_key" : var.base_data.access_key,
       "secret_key" : var.base_data.secret_key,
+      "region": var.base_data.region,
     }
   )
 
@@ -46,12 +47,11 @@ resource "null_resource" "wait_zk" {
   provisioner "remote-exec" {
     inline = [
       file("./scripts/base/wait_user_data.sh"),
-      "cat /home/ubuntu/finished.txt",
-      "cat /var/log/cloud-init-output.log",
     ]
+
     connection {
       type        = "ssh"
-      user        = "ubuntu"
+      user        = "ec2-user"
       private_key = file(var.base_data.pk_file_path)
       host        = each.value.public_ip
     }

@@ -1,6 +1,6 @@
 resource "aws_instance" "overlord" {
-  ami                         = var.base_data.ubuntu24_id
-  instance_type               = "m5a.large"
+  ami                         = var.base_data.ami_id
+  instance_type               = "m6g.large"
   associate_public_ip_address = true
   key_name                    = var.base_data.key_name
 
@@ -39,12 +39,11 @@ resource "null_resource" "wait_overlord" {
   provisioner "remote-exec" {
     inline = [
       file("./scripts/base/wait_user_data.sh"),
-      "cat /home/ubuntu/finished.txt",
-      "cat /var/log/cloud-init-output.log",
     ]
+
     connection {
       type        = "ssh"
-      user        = "ubuntu"
+      user        = "ec2-user"
       private_key = file(var.base_data.pk_file_path)
       host        = aws_instance.overlord.public_ip
     }

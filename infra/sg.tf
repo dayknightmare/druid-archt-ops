@@ -1,9 +1,9 @@
 resource "aws_security_group" "druid_sg" {
-  name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
+  name = "${var.cluster_name}-druid-sg"
 
   tags = {
-    Name         = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
-    CostTracking = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-sg"
+    Name         = "${var.cluster_name}-druid-sg"
+    CostTracking = "${var.cluster_name}-druid-sg"
     ClusterName  = var.cluster_name
     ResourceType = "druid-sg"
   }

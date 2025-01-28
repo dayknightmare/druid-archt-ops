@@ -4,7 +4,7 @@ variable "base_data" {
     region = string,
     cluster_name = string,
     key_name = string,
-    ubuntu24_id = string,
+    ami_id = string,
     sg_id = string,
     pk_file_path = string,
     access_key = string,

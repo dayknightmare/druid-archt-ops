@@ -1,9 +1,14 @@
-data "aws_ami" "ubuntu24" {
+data "aws_ami" "alinux" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
+    values = ["al2023-ami-2023*"]
+  }
+
+  filter {
+    name = "architecture"
+    values = [ "arm64" ]
   }
 
   filter {
@@ -11,5 +16,5 @@ data "aws_ami" "ubuntu24" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"]
+  owners = ["amazon"]
 }

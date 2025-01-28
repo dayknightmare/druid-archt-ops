@@ -6,7 +6,7 @@ variable "base_data" {
     druid_version = string,
     base_common = string,
     key_name = string,
-    ubuntu24_id = string,
+    ami_id = string,
     sg_id = string,
     pk_file_path = string,
   })

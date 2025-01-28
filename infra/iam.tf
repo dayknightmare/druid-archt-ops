@@ -1,5 +1,5 @@
 resource "aws_iam_user" "druid_iam_user" {
-  name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-usr"
+  name = "${var.cluster_name}-druid-usr"
 }
 
 resource "aws_iam_access_key" "druid_access_key" {
@@ -7,14 +7,14 @@ resource "aws_iam_access_key" "druid_access_key" {
 
   provisioner "local-exec" {
     command = <<-EOT
-        echo access_key: ${aws_iam_access_key.druid_access_key.id} >> ./storage/${var.cluster_name}-config.txt
+        echo access_key: ${aws_iam_access_key.druid_access_key.id} > ./storage/${var.cluster_name}-config.txt
         echo secret_key: ${aws_iam_access_key.druid_access_key.secret} >> ./storage/${var.cluster_name}-config.txt
     EOT
   }
 }
 
 resource "aws_iam_group" "druid_group" {
-  name = "${var.cluster_name == "" ? "" : "${var.cluster_name}-"}druid-usr-gr"
+  name = "${var.cluster_name}-druid-usr-gr"
 }
 
 resource "aws_iam_group_membership" "druid_group_membership" {
