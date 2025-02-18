@@ -1,22 +1,29 @@
 profile = "default"
 region = "us-east-2"
 
-druid_version = "31.0.1"
-cluster_name = "prod"
-internal_password = "123"
-admin_password = "123"
+druid_config = {
+  version = "31.0.1"
+  cluster_name = "prod"
+  internal_password = "123"
+  admin_password = "123"
 
-db_type = "postgres"
-db_host = "localhost"
-db_port = 5432
-db_user = "druid"
-db_password = "druid"
-db_db = "druid"
+  metadata_config = {
+    type = "postgres"
+    host = "localhost"
+    user = "druid"
+    password = "druid"
+    db = "druid"
+    port = 5432
+  }
 
-base_instance_type = "t2.nano"
+  overlord_config = {
+    count = 1,
+    instance = "m7g.large",
+  }
+}
 
-zk_data = {
+zk_config = {
   count = 3,
-  instance = "t3a.medium",
+  instance = "t4g.medium",
   version = "3.8.4"
 }

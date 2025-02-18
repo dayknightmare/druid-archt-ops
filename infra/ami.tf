@@ -7,8 +7,8 @@ data "aws_ami" "alinux" {
   }
 
   filter {
-    name = "architecture"
-    values = [ "arm64" ]
+    name   = "architecture"
+    values = ["arm64"]
   }
 
   filter {

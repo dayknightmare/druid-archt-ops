@@ -1,5 +1,5 @@
 [Unit]
-Description=Druid Overlord Service
+Description=Druid MM Service
 After=network.target
 
 [Service]

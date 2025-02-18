@@ -4,7 +4,7 @@ resource "tls_private_key" "pk" {
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "${var.cluster_name}-druid-key"
+  key_name   = "${var.druid_config.cluster_name}-druid-key"
   public_key = tls_private_key.pk.public_key_openssh
 }
 

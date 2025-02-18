@@ -9,7 +9,7 @@ variable "base_data" {
     pk_file_path = string,
     access_key = string,
     secret_key = string,
-    zk_data = object({
+    zk_config = object({
       instance = string,
       count    = number,
       version  = string,

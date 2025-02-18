@@ -13,17 +13,20 @@ provider "aws" {
 }
 
 module "overlord" {
-  source = "./nodes/overloard"
+  source = "./nodes/overlord"
   base_data = {
     base_common = local.base_common,
     profile = var.profile,
     region = var.region,
-    cluster_name = var.cluster_name,
-    druid_version = var.druid_version,
     key_name = aws_key_pair.kp.key_name,
     ami_id = data.aws_ami.alinux.id,
     sg_id = aws_security_group.druid_sg.id,
     pk_file_path = local.pk_file_path,
+    druid_config = {
+      cluster_name = var.druid_config.cluster_name,
+      druid_version = var.druid_config.druid_version,
+    },
+    overlord_config = var.druid_config.overlord_config,
   }
 }
 
@@ -32,8 +35,8 @@ module "overlord" {
 #   base_data = {
 #     profile = var.profile,
 #     region = var.region,
-#     cluster_name = var.cluster_name,
-#     zk_data = var.zk_data,
+#     cluster_name = var.druid_config.cluster_name,
+#     zk_config = var.zk_config,
 #     key_name = aws_key_pair.kp.key_name,
 #     ami_id = data.aws_ami.alinux.id,
 #     sg_id = aws_security_group.druid_sg.id,

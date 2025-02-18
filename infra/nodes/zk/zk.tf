@@ -1,9 +1,9 @@
 resource "aws_instance" "zk" {
   ami                         = var.base_data.ami_id
-  instance_type               = var.base_data.zk_data.instance
+  instance_type               = var.base_data.zk_config.instance
   associate_public_ip_address = true
   key_name                    = var.base_data.key_name
-  count                       = var.base_data.zk_data.count
+  count                       = var.base_data.zk_config.count
 
   vpc_security_group_ids = [
     var.base_data.sg_id
@@ -12,7 +12,7 @@ resource "aws_instance" "zk" {
   user_data = templatefile(
     "./scripts/zk/init.sh",
     {
-      "zk_version" : var.base_data.zk_data.version,
+      "zk_version" : var.base_data.zk_config.version,
       "zk_id" : count.index,
       "cluster_name" : var.base_data.cluster_name,
       "access_key" : var.base_data.access_key,
